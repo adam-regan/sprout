@@ -1,5 +1,5 @@
 //
-//  FertilityDataModels.swift
+//  KeyStats.swift
 //  Sprout
 //
 //  Created by Adam Regan on 20/03/2026.
@@ -7,36 +7,43 @@
 
 import Foundation
 
-struct APIResponse<T: Decodable>: nonisolated Decodable {
-    let entity: String
-    let exportedAt: String
-    let rowCount: Int
-    let data: [T]
-}
-
 struct KeyStat: nonisolated Decodable, Hashable {
     let statKey: String
     let statValue: String
 }
 
 extension KeyStat {
-    var displayLabel: String {
+    var displayLabel: String? {
         switch statKey {
-        case "total_cycles":
-            return "Total Treatment Cycles"
-        case "success_rate":
-            return "Success Rate"
-        case "live_births":
-            return "Live Births"
-        case "avg_age":
-            return "Average Patient Age"
-        case "clinics_count":
+        case "ivf_babies_born":
+            return "Total Births"
+        case "nhs_funded_pct":
+            return "NHS Funded %"
+        case "ivf_cycles":
+            return "Total IVF Cycles"
+        case "patients_treated":
+            return "Treated Patients"
+        case "licensed_clinics":
             return "Licensed Clinics"
+        case "egg_freezing_cycles":
+            return "Egg Freezing Cycles"
+        case "new_donors":
+            return "New Donors"
+        case "data_years_range":
+            return "Data Years"
+        case "ivf_births_pct_of_uk":
+            return "IVF Births %"
         default:
-            // Fallback: convert snake_case to Title Case
-            return statKey
-                .replacingOccurrences(of: "_", with: " ")
-                .capitalized
+            return nil
+        }
+    }
+
+    var formattedValue: String {
+        switch statKey {
+        case "nhs_funded_pct", "ivf_births_pct_of_uk":
+            return "\(statValue)%"
+        default:
+            return statValue
         }
     }
 }

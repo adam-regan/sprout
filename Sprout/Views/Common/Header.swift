@@ -13,7 +13,7 @@ struct Header: View {
         HStack(spacing: 0) {
             Text(title)
                 .fontWeight(.semibold)
-                .font(.system(size: 24))
+                .font(.theme.title2)
                 .tracking(1.1)
                 .frame(maxWidth: .infinity, alignment: .leading)
             Button {

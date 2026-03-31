@@ -12,13 +12,13 @@ extension Color {
 }
 
 struct ColorTheme {
-    let accent = Color("Accent")
-    let primary = Color("PrimaryColor")
+    let accent = Color("AccentColor")
+    let primary = Color("AppPrimary")
     let background = Color("Background")
     let border = Color("Border")
     let danger = Color("Danger")
     let primaryLight = Color("Primary Light")
-    let secondary = Color("SecondaryColor")
+    let secondary = Color("AppSecondary")
     let success = Color("Success")
     let surface = Color("Surface")
     let warning = Color("Warning")

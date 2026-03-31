@@ -14,17 +14,19 @@ struct DashboardCard: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(stat.statValue)
-                    .font(isHeroCard ? .title : .title2)
+                Text(stat.formattedValue)
+                    .font(isHeroCard ? .theme.title : .theme.title2)
                     .fontWeight(.bold)
-                Text(stat.displayLabel)
-                    .font(.system(size: isHeroCard ? 12 : 11))
-                    .opacity(0.8)
+                if let label = stat.displayLabel {
+                    Text(label)
+                        .font(isHeroCard ? .theme.caption : .theme.caption2)
+                        .fontWeight(.semibold)
+                }
             }
             Spacer()
         }
         .padding(isHeroCard ? Spacing.lg : Spacing.md)
-        .foregroundColor(Color.theme.secondary)
+        .foregroundColor(Color.theme.primary)
         .background(Color.theme.surface)
         .cornerRadius(cornerRadius)
         .overlay {

@@ -21,7 +21,7 @@ struct CustomTab: View {
                     .scaledToFit()
                     .frame(width: 24, height: 24)
                 Text(targetTab.displayName)
-                    .font(.footnote)
+                    .font(.theme.footnote)
             }
         }
         .buttonStyle(.plain)

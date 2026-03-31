@@ -28,15 +28,12 @@ actor FertilityDataRepository: FertilityDataRepositoryProtocol {
     init() {
         apiService = PublicAPIService()
     }
-    
-    // MARK: - Private Helper
-    
+        
     private func fetchWithCache<T: Decodable>(
         endpoint: FertilityDataEndpoint
     ) async throws -> T {
         let key = endpoint.path
         
-        // Check cache first
         if let entry = cache[key],
            entry.isValid(timeout: endpoint.cacheTimeout),
            let cached = entry.data as? T
@@ -44,9 +41,7 @@ actor FertilityDataRepository: FertilityDataRepositoryProtocol {
             return cached
         }
         
-        // Check if request is already in progress
         if let existingTask = ongoingRequests[key] {
-            // Wait for the existing request to complete
             let result = try await existingTask.value
             guard let typedResult = result as? T else {
                 throw URLError(.cannotDecodeContentData)
@@ -54,23 +49,18 @@ actor FertilityDataRepository: FertilityDataRepositoryProtocol {
             return typedResult
         }
         
-        // Create new request task
         let task = Task<any Decodable, Error> {
             let data: T = try await apiService.fetch(from: endpoint.path)
             
-            // Update cache
             cache[key] = CacheEntry(data: data, timestamp: Date())
             
-            // Remove from ongoing requests
             ongoingRequests.removeValue(forKey: key)
             
             return data
         }
         
-        // Store the ongoing task
         ongoingRequests[key] = task
         
-        // Wait for result
         let result = try await task.value
         guard let typedResult = result as? T else {
             throw URLError(.cannotDecodeContentData)

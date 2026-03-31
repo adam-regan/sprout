@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MainView: View {
+struct MainContentView: View {
     @State var selectedTab: Tabs = .dashboard
     var body: some View {
         VStack(spacing: 0) {
@@ -18,6 +18,7 @@ struct MainView: View {
         }
         .padding(.horizontal)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(Color.theme.background)
     }
 
     @ViewBuilder
@@ -38,5 +39,6 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView()
+    MainContentView()
+        .environment(DataManager())
 }

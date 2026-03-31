@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct SproutApp: App {
+    @State private var dataManager = DataManager()
+    
     var body: some Scene {
         WindowGroup {
-            MainView()
+            RootView()
+                .environment(dataManager)
         }
     }
 }
